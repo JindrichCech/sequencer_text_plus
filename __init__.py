@@ -22,6 +22,11 @@
 #
 # ##### END GPL LICENSE BLOCK ###############################################
 
+from . import text_type_writer
+from . import text_blinking
+from . import type_writer_tool
+from . import blinking_tool
+
 
 bl_info = {
     "name": "Text Strip Animation",
@@ -35,14 +40,6 @@ bl_info = {
     "description": "Present text as typewriter.\
                     Flash text with chosen period."
 }
-
-    
-import bpy
-
-from . import text_type_writer
-from . import text_blinking
-from . import type_writer_tool
-from . import blinking_tool
 
 
 # Register
