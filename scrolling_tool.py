@@ -23,46 +23,49 @@
 
 
 import bpy
+from .blinking_tool import SEQUENCER_WT_BlinkingTextTool
 
 
-class SEQUENCER_WT_TypeWriterTool(bpy.types.WorkSpaceTool):
+class SEQUENCER_WT_ScrollingTextTool(bpy.types.WorkSpaceTool):
     bl_space_type = 'SEQUENCE_EDITOR'
     bl_context_mode = 'SEQUENCER'
 
     # The prefix of the idname should be your add-on name.
-    bl_idname = "sequencer.tool_typewriter"
-    bl_label = "Typewriter effect"
+    bl_idname = "sequencer.tool_textscrolling"
+    bl_label = "Scrolling text"
     bl_description = (
         "Click LMB on Text strip.\n\n"
-        "This Text will be presented by chosen velocity.\n"
+        "According to a chosen direction moves a text between screen borders"
+        " during strip duration.\n"
+        "Combination of horizontal and vertical movements -> diagonal movement."
+        "\n"
     )
-    bl_icon = "brush.sculpt.displacement_smear"
+    bl_icon = "ops.armature.extrude_move"
     bl_widget = None
-    bl_keymap = (("sequencer.text_typewriter", {"type": 'LEFTMOUSE',
-                                                "value": 'PRESS'}, {}),)
+    bl_keymap = (("sequencer.text_scrolling", {"type": 'LEFTMOUSE',
+                                               "value": 'CLICK'}, {}),)
 
     def draw_settings(context, layout, tool):
-        props = tool.operator_properties("sequencer.text_typewriter")
-        layout.prop(props, "writing_speed")
-        
+        props = tool.operator_properties("sequencer.text_scrolling")
+        layout.prop(props, "direction")
+
 
 def register():
     try:
-        bpy.utils.register_tool(SEQUENCER_WT_TypeWriterTool,
-                                after={"builtin.blade"},
-                                separator=True, group=True)
-#        print("Registration: SEQUENCER_WT_TypeWriterTool")
+        bpy.utils.register_tool(SEQUENCER_WT_ScrollingTextTool,
+                                after={SEQUENCER_WT_BlinkingTextTool.bl_idname})
+        #        print("Registration: SEQUENCER_WT_BlinkingTextTool")
         return True
     except Exception:
-        print("Registration error: SEQUENCER_WT_TypeWriterTool")
+        print("Registration error: SEQUENCER_WT_ScrollingTextTool")
         return False
 
 
 def unregister():
-    try:    
-        bpy.utils.unregister_tool(SEQUENCER_WT_TypeWriterTool)
-#        print("UnRegistration: SEQUENCER_WT_TypeWriterTool")  
-        return True  
+    try:
+        bpy.utils.unregister_tool(SEQUENCER_WT_ScrollingTextTool)
+        #        print("UnRegistration: SEQUENCER_WT_ScrollingTextTool")
+        return True
     except Exception:
-        print("Un-registration error: SEQUENCER_WT_TypeWriterTool")
+        print("Un-registration error: SEQUENCER_WT_ScrollingTextTool")
         return False

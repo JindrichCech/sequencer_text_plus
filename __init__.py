@@ -2,6 +2,7 @@
 # Supplement to a Blender Sequencer:
 #     1. tool = Typewriter effect
 #     2. tool = Text flashing
+#     3. tool = Text scrolling
 ##############################################################################
 
 # ##### BEGIN GPL LICENSE BLOCK ##############################################
@@ -24,14 +25,16 @@
 
 from . import text_type_writer
 from . import text_blinking
+from . import text_scrolling
 from . import type_writer_tool
 from . import blinking_tool
+from . import scrolling_tool
 
 
 bl_info = {
     "name": "Text Strip Animation",
     "author": "Jindřich Čech: jindrich.cech@quick.cz",
-    "version": (3, 1, 1),
+    "version": (3, 2, 1),
     "blender": (3, 0, 0),
     "location": "Sequencer > Tools > TypeWriter effect + Text blinking",
     "warning": "",
@@ -46,8 +49,10 @@ bl_info = {
 _modules = [
     text_type_writer,
     text_blinking,
+    text_scrolling,
     type_writer_tool,
-    blinking_tool
+    blinking_tool,
+    scrolling_tool
 ]
 
 
