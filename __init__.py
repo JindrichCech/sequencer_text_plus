@@ -36,12 +36,13 @@ bl_info = {
     "author": "Jindřich Čech: jindrich.cech@quick.cz",
     "version": (3, 2, 1),
     "blender": (3, 0, 0),
-    "location": "Sequencer > Tools > TypeWriter effect + Text blinking",
+    "location": "Sequencer > Tools > TypeWriter effect + Text blinking + Text scrolling",
     "warning": "",
     "wiki_url": "",
     "category": "Sequencer",
-    "description": "Present text as typewriter.\
-                    Flash text with chosen period."
+    "description": "Present text as typewriter. "
+                   "Flash text with chosen period. "
+                   "Scroll text along screen."
 }
 
 
@@ -62,9 +63,9 @@ def register():
         if hasattr(m, "register"):
             ok = ok * m.register()    # impossible AND - (short evaluate)
     if ok:
-        print("Add-on text_writer+blinking registered.\n")
+        print("Add-on text_writing+blinking+scrolling registered.\n")
     else:
-        print("Unsuccessful registration of add-on text_writer+blinking!\n")
+        print("Unsuccessful registration of add-on text_writing+blinking+scrolling!\n")
 
 
 def unregister():
@@ -73,9 +74,9 @@ def unregister():
         if hasattr(m, "unregister"):
             ok = ok * m.unregister()    # impossible AND - (short evaluate)
     if ok:
-        print("Add-on text_writer+blinking Un-registered.\n")
+        print("Add-on text_writer+blinking+scrolling Un-registered.\n")
     else:
-        print("Add-on text_writer+blinking was not un-registered!\n")
+        print("Add-on text_writer+blinking+scrolling was not un-registered!\n")
 
 
 if __name__ == "__main__":
