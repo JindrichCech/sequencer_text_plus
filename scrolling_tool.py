@@ -36,7 +36,7 @@ class SEQUENCER_WT_ScrollingTextTool(bpy.types.WorkSpaceTool):
     bl_description = (
         "Click LMB on Text strip.\n\n"
         "According to a chosen direction moves a text between screen borders"
-        " during strip duration.\n"
+        " (+ Crop) during strip duration.\n"
         "Combination of horizontal and vertical movements -> diagonal movement."
         "\n"
     )

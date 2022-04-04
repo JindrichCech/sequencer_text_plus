@@ -81,11 +81,19 @@ class SEQUENCER_OT_Text_Scrolling(bpy.types.Operator):
         strip.align_y = 'CENTER'
         strip.transform.offset_x = 0
         strip.transform.offset_y = 0
+        height_correction = 0
         if strip.use_bold:
             koef = 0.85
         else:
             koef = 0.6
         width_of_text = len(strip.text) * koef * strip.font_size  # pixels(appr)
+        words = strip.text.split(" ")
+        number_of_words = len(words)
+        longest_word = 0
+        for word in words:
+            if len(word) > longest_word:
+                longest_word = len(word)
+
         if strip.wrap_width == 0:
             number_of_lines = 1
         else:
@@ -93,7 +101,16 @@ class SEQUENCER_OT_Text_Scrolling(bpy.types.Operator):
             if width_of_text % (strip.wrap_width * screen_width) > 0:
                 number_of_lines += 1
             if number_of_lines > 1:
-                width_of_text = strip.wrap_width * screen_width  # pixels
+                if number_of_lines > number_of_words:
+                    number_of_lines = number_of_words
+                    width_of_text = longest_word * koef * strip.font_size
+                else:
+                    width_of_text = strip.wrap_width * screen_width  # pixels
+
+                # For wrap_width>0 Blender does not vertically center
+                # more lines correctly:
+                height_correction = 0.6 * strip.font_size / screen_height
+
         height_of_text = number_of_lines * 1.2 * strip.font_size
         print(width_of_text, height_of_text, number_of_lines)
         if strip.use_box:
@@ -116,14 +133,16 @@ class SEQUENCER_OT_Text_Scrolling(bpy.types.Operator):
                 half_of_text_width
         elif self.direction == 'BtU':
             data_index = 1
-            anim_from = (strip.crop.min_y / screen_height) - half_of_text_height
+            anim_from = (strip.crop.min_y / screen_height) - \
+                half_of_text_height - height_correction
             anim_to = 1 - (strip.crop.max_y / screen_height) + \
-                half_of_text_height
+                half_of_text_height + height_correction
         else:    # self.direction == 'TtB':
             data_index = 1
             anim_from = 1 - (strip.crop.max_y / screen_height) + \
-                half_of_text_height
-            anim_to = (strip.crop.min_y / screen_height) - half_of_text_height
+                half_of_text_height + height_correction
+            anim_to = (strip.crop.min_y / screen_height) - \
+                half_of_text_height - height_correction
 
         strip.location[data_index] = anim_from
         strip.keyframe_insert(data_path='location', index=data_index,
